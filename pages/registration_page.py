@@ -8,9 +8,6 @@ class RegistrationPage:
     REGISTRATION_LINK = (By.CSS_SELECTOR, "[href='/register']")
     FIRST_NAME_INPUT = (By.CSS_SELECTOR, '[name="firstName"]')
     LAST_NAME_INPUT = (By.CSS_SELECTOR, "input[name='lastName']")
-    EMAIL_INPUT = (By.CSS_SELECTOR, '[name = "username"]')
-    PASSWORD_INPUT = (By.CSS_SELECTOR, '[name = "password"]')
-    BUTTON_REGISTRATION = (By.XPATH, "//button[text()='Y'alla!']")
     TERM_OF_USE_CHECK_BOX = (By.ID, "terms-of-use")
 
     def __init__(self,driver):
