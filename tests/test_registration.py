@@ -1,46 +1,43 @@
+import random
+import uuid
+
 from pages.registration_page import RegistrationPage
-
-VALID_EMAIL = "manuel1121@gmail.com"
-VALID_PASSWORD = "Manuel12345$"
-INVALID_EMAIL = "manuelgmail.com"
-INVALID_PASSWORD = "Manuel12345"
+from models.user import User
 
 
-def test_valid_login_success(driver):
+def test_valid_registration_success(driver):
     registration_page = RegistrationPage(driver)
+#    random_suffix = random.randint(1, 1000000)
+    random_suffix = uuid.uuid4()
+    user = User(
+        first_name= "Sergey",
+        last_name= "loshkarev",
+        email = f"qwas{random_suffix}aaaddad@gmail.com",
+        password= "Aa_12345!"
+    )
+
     registration_page.open_registration_page()
-    registration_page.fill_email_field(VALID_EMAIL)
-    registration_page.fill_password_field(VALID_PASSWORD)
-    registration_page.click_on_registration_button()
+    registration_page.fill_registration_form(user)
 
-    #assert registration_page.is_sign_out_displayed()
+    assert registration_page.confirmation1() == "Registered"
+    assert registration_page.confirmation2() == "You are logged in success"
+    registration_page.close_window()
 
-def test_registration_with_invalid_email(driver):
+
+def test_invalid_registration_with_empty_name(driver):
     registration_page = RegistrationPage(driver)
+#    random_suffix = random.randint(1, 1000000)
+#    random_suffix = uuid.uuid4()
+    user = User(
+        first_name= "",
+        last_name= "loshkarev",
+        email = "qwasaaaddad@gmail.com",
+        password= "Aa_12345!"
+    )
+
     registration_page.open_registration_page()
-    registration_page.fill_email_field(INVALID_EMAIL)
-    registration_page.fill_password_field(VALID_PASSWORD)
-    registration_page.click_on_registration_button()
+    registration_page.fill_first_name_field(user.first_name)
 
-    assert "Wrong email or password format" in registration_page.get_alert_text()
-    registration_page.accept_alert()
+    assert registration_page.error_message_text() == "Name is required"
+    assert registration_page.submit_button_disabled()
 
-def test_registration_with_invalid_password(driver):
-    registration_page = RegistrationPage(driver)
-    registration_page.open_registration_page()
-    registration_page.fill_email_field(VALID_EMAIL)
-    registration_page.fill_password_field(INVALID_PASSWORD)
-    registration_page.click_on_registration_button()
-
-    assert "Wrong email or password format" in registration_page.get_alert_text()
-    registration_page.accept_alert()
-
-def test_registration_existed_user(driver):
-    registration_page = RegistrationPage(driver)
-    registration_page.open_registration_page()
-    registration_page.fill_email_field("manuel@gmail.com")
-    registration_page.fill_password_field("Manuel12345$")
-    registration_page.click_on_registration_button()
-
-    assert registration_page.get_alert_text() == "User already exist"
-    registration_page.accept_alert()

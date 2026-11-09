@@ -7,7 +7,7 @@ def driver():
     driver = webdriver.Chrome()
     driver.implicitly_wait(10)
     driver.maximize_window()
-    driver.get("https://telranedu.web.app")
+    driver.get("https://icarro-v1.netlify.app/search?page=0&size=10")
 
     yield driver
 
