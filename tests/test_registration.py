@@ -26,8 +26,6 @@ def test_valid_registration_success(driver):
 
 def test_invalid_registration_with_empty_name(driver):
     registration_page = RegistrationPage(driver)
-#    random_suffix = random.randint(1, 1000000)
-#    random_suffix = uuid.uuid4()
     user = User(
         first_name= "",
         last_name= "loshkarev",
